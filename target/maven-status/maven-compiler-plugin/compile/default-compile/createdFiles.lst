@@ -1,1 +1,3 @@
-com\cognizant\POWER_BI_UI\App.class
+powerbiui\App.class
+powerbiui\SQLiteQueryExecutor.class
+powerbiui\utils\Constants.class
