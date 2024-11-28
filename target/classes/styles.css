@@ -19,14 +19,15 @@ body {
 .card1, .card2 {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 16px;
-  text-align: center;
+  text-align: left;
   background-color: #ffffff;
   border-radius: 8px;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: left;
+  justify-content: left;
   height: 80px;
   margin-bottom: 20px;
+  font-weight: 700;
 }
 .card3{
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);

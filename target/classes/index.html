@@ -15,7 +15,6 @@
 </body>
 </html>
  -->
- 
  <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,72 +23,70 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script> <!-- DataLabels plugin -->
+    
 </head>
 <body>
 
 <div class="heading">
-<div>
-<h1 class="heading-text">Model Stats</h1>
+    <div>
+        <h1 class="heading-text">Model Stats</h1>
+    </div>
 </div>
-</div>
-    <div class="dashboard">
-    <div class="row">
-    	
-    	<div class="column">
-    	
-        <div class="card1">
-            <canvas id="chart1"></canvas>
-       	</div>
-       	<div class="card4">
-            <canvas id="chart2"></canvas>
-       	</div>
-       	</div>
-      
-      <div class="column">
-        <div class="card2">
-            <canvas id="chart3"></canvas>
-       	</div>
-       	<div class="card5">
-            <canvas id="chart4"></canvas>
-       	</div>
-       	</div>
-       	
-       	<div class="column">
-        <div class="card3">
-            <canvas id="chart5"></canvas>
-       	</div>
-       	        <div class="card6">
-            <canvas id="chart6"></canvas>
-       	</div>
-       	</div>
-      
-      </div>
-      
-      
-      <div class="row">
-    	
-    	<div class="column">
-        <div class="card7">
-            <canvas id="chart7"></canvas>
-       	</div>
-       	</div>
-      
-      <div class="column">
-        <div class="card8">
-            <canvas id="chart8"></canvas>
-       	</div>
-       	</div>
-       	
-       	<div class="column">
-        <div class="card9">
-            <canvas id="chart9"></canvas>
-       	</div>
-       	</div>
-      
-      </div>
-       	</div>  
 
-    <script src="index.js"></script>
+<div class="dashboard">
+    <!-- First Row -->
+    <div class="row">
+        <div class="column">
+            <div class="card1">
+                <p>Objects Converted</p>
+            </div>
+            <div class="card4">
+                <canvas id="chart1"></canvas>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="card2">
+                <p>Objects not Converted</p>
+            </div>
+            <div class="card5">
+                <canvas id="chart2"></canvas>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="card3">
+                <p>Model Conversion</p>
+            </div>
+            <div class="card6">
+                <p>Time for Model (Min)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Second Row -->
+    <div class="row">
+        <div class="column">
+            <div class="card7">
+                <canvas id="chart3"></canvas>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="card8">
+                <canvas id="chart4"></canvas>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="card9">
+                <canvas id="chart5"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="index.js"></script>
 </body>
 </html>
- 
