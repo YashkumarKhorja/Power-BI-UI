@@ -1,25 +1,29 @@
 package powerbiui;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.*;
 import powerbiui.utils.*;
+import com.google.gson.Gson;
 
 public class SQLiteQueryExecutor {
     // Database URL will be provided as a runtime argument
     private static String DB_URL;
     private static String QUERIES_PROPERTIES = Constants.QUERIES_PROPERTIES_FILE;
+    private static String OUTPUT_DIR = Constants.OUTPUT_DIR;
 
     public static void main(String[] args) {
         // Check if the DB URL is provided
-        if (args.length < 1) {
-            System.err.println("Error: Please provide the database file path as an argument.");
-            System.exit(1);
-        }
+//        if (args.length < 1) {
+//            System.err.println("Error: Please provide the database file path as an argument.");
+//            System.exit(1);
+//        }
 
         // Assign DB URL from arguments
-        DB_URL = Constants.DB_URL_PREFIX + args[0];
+//        DB_URL = Constants.DB_URL_PREFIX + args[0];
+        DB_URL = Constants.DB_URL_PREFIX + "C:\\Users\\2362858\\Downloads\\sqlite-tools-win-x64-3470000\\power-bi-ui.db";
 
         try {
             // Load queries from properties file
@@ -36,7 +40,8 @@ public class SQLiteQueryExecutor {
                     List<Map<String, Object>> results = executeQuery(connection, query);
 
                     // Display the results
-                    printResults(results);
+//                    printResults(results);
+                    saveResultsToJson(key, results);
                 }
             }
 
@@ -80,15 +85,25 @@ public class SQLiteQueryExecutor {
         }
         return resultList;
     }
-
-    private static void printResults(List<Map<String, Object>> results) {
-        if (results.isEmpty()) {
-            System.out.println("No results found.");
-            return;
-        }
-
-        for (Map<String, Object> row : results) {
-            System.out.println(row);
+    
+    private static void saveResultsToJson(String key, List<Map<String, Object>> results) {
+        String filePath = OUTPUT_DIR + key + ".json";
+        try (FileWriter writer = new FileWriter(filePath)) {
+            new Gson().toJson(results, writer);
+            System.out.println("Results saved to " + filePath);
+        } catch (IOException e) {
+            System.err.println("Failed to save JSON for query key " + key + ": " + e.getMessage());
         }
     }
+
+//    private static void printResults(List<Map<String, Object>> results) {
+//        if (results.isEmpty()) {
+//            System.out.println("No results found.");
+//            return;
+//        }
+//
+//        for (Map<String, Object> row : results) {
+//            System.out.println(row);
+//        }
+//    }
 }
