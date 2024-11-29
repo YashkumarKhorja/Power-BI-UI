@@ -131,7 +131,7 @@ function renderCharts() {
       options: {
         responsive: true,
         maintainAspectRatio: true,
-        aspectRatio: 1.5,
+        aspectRatio: 1.25,
         plugins: {
           legend: {
             display: false // Hide the default legend
@@ -143,17 +143,21 @@ function renderCharts() {
           datalabels: {
             color: '#000',
             formatter: (value, context) => {
+				const maxlength= 10;
 				const label = context.chart.data.labels[context.dataIndex];
-              return `${label}`;
+				const truncatedLabel = truncateText(label, maxlength);
+              return `${truncatedLabel}`;
             },
+            font:{
+				size: 10
+			},
             anchor: 'end',
             align: 'end',
-            offset: 10,
+            offset: 5,
             borderColor: '#ccc',
             borderWidth: 0,
-            borderRadius: 4,
-            backgroundColor: '#fff',
-            padding: 5
+            borderRadius: 2,
+            padding: 4
           }
         },
         tooltips: {
