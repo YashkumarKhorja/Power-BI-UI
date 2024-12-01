@@ -4,7 +4,7 @@ const data = {
 "query9":[{"issuedescription":"Issue found in the table","count":33},{"issuedescription":"Issue found in the Filter","count":31},{"issuedescription":"sum(vClaimInformationConsolidated[StatisticalEntity])","count":10},{"issuedescription":"sum(vClaimInformationConsolidated[MNCode_ShadHO])","count":10},{"issuedescription":"unable to create connection: Connector connect error: {0} [11043]:Connector connect error: {0}(Connector connect error: IDataInitialize::GetDataSource. HRESULT \u003d 80004005. ErrorSource: Microsoft OLE DB Provider for SQL Server, ErrorMsg: Cannot open database \"aip_prod_sqldw\" requested by the login. The login failed.)","count":5},{"issuedescription":"{fixedOrders$[Category],Orders$[Sub-Category]:sum(Orders$[Sales])}\u003e153000","count":3},{"issuedescription":"{fixedOrders$[Category],Orders$[Sub-Category]:sum(Orders$[Sales])}","count":3},{"issuedescription":"DATEPART(year, Orders$[Order Date])","count":3},{"issuedescription":"DATEPART(quarter, Orders$[Order Date])","count":3},{"issuedescription":"DATEPART(month, Orders$[Order Date])","count":3},{"issuedescription":"Add(Orders$[Quantity])","count":3},{"issuedescription":" VALUES(VALUES( Orders$[Category],Orders$[Sub-Category,CALCULATE(SUMX(Orders$,Orders$[Sales)[VALUES( Orders$[Category],Orders$[Sub-Category,CALCULATE(SUMX(Orders$,Orders$[Sales)])","count":3},{"issuedescription":"Reference tables is not found in business layer","count":2},{"issuedescription":"Issue found in the Variable","count":2},{"issuedescription":"unable to create connection:","count":1}],
 "query4":[{"no_of_models":1,"track":" To QlikSense"},{"no_of_models":18,"track":"Cognos To QlikSense"},{"no_of_models":1,"track":"cognos to powerbi"},{"no_of_models":1,"track":"cognos to qliksense"},{"no_of_models":13,"track":"mstr to powerbi"},{"no_of_models":1,"track":"mstrtopbi"},{"no_of_models":1,"track":"mstrtopowerbi"},{"no_of_models":41,"track":"obiee to powerbi"},{"no_of_models":68,"track":"qliksense to powerbi"},{"no_of_models":56,"track":"tableau to powerbi"}],
 "query5":[{"no_of_models":1,"track":" To QlikSense"},{"no_of_models":18,"track":"Cognos To QlikSense"},{"no_of_models":1,"track":"cognos to powerbi"},{"no_of_models":1,"track":"cognos to qliksense"},{"no_of_models":13,"track":"mstr to powerbi"},{"no_of_models":1,"track":"mstrtopbi"},{"no_of_models":1,"track":"mstrtopowerbi"},{"no_of_models":41,"track":"obiee to powerbi"},{"no_of_models":68,"track":"qliksense to powerbi"},{"no_of_models":56,"track":"tableau to powerbi"}],
-"query7":[{"issuedescription":"Issue found in the table","count":33},{"issuedescription":"Issue found in the Filter","count":31},{"issuedescription":"sum(vClaimInformationConsolidated[StatisticalEntity])","count":10},{"issuedescription":"sum(vClaimInformationConsolidated[MNCode_ShadHO])","count":10},{"issuedescription":"unable to create connection: Connector connect error: {0} [11043]:Connector connect error: {0}(Connector connect error: IDataInitialize::GetDataSource. HRESULT \u003d 80004005. ErrorSource: Microsoft OLE DB Provider for SQL Server, ErrorMsg: Cannot open database \"aip_prod_sqldw\" requested by the login. The login failed.)","count":5},{"issuedescription":"{fixedOrders$[Category],Orders$[Sub-Category]:sum(Orders$[Sales])}\u003e153000","count":3},{"issuedescription":"{fixedOrders$[Category],Orders$[Sub-Category]:sum(Orders$[Sales])}","count":3},{"issuedescription":"DATEPART(year, Orders$[Order Date])","count":3},{"issuedescription":"DATEPART(quarter, Orders$[Order Date])","count":3},{"issuedescription":"DATEPART(month, Orders$[Order Date])","count":3},{"issuedescription":"Add(Orders$[Quantity])","count":3},{"issuedescription":" VALUES(VALUES( Orders$[Category],Orders$[Sub-Category,CALCULATE(SUMX(Orders$,Orders$[Sales)[VALUES( Orders$[Category],Orders$[Sub-Category,CALCULATE(SUMX(Orders$,Orders$[Sales)])","count":3},{"issuedescription":"Reference tables is not found in business layer","count":2},{"issuedescription":"Issue found in the Variable","count":2},{"issuedescription":"unable to create connection:","count":1}]
+"query7":[{"no_of_models":12,"track":"tableau to powerbi"},{"no_of_models":1,"track":"mstrtopbi"},{"no_of_models":14,"track":"qliksense to powerbi"},{"no_of_models":1,"track":"obiee to powerbi"},{"no_of_models":12,"track":"Cognos To QlikSense"},{"no_of_models":14,"track":"cognos to qliksense"},{"no_of_models":11,"track":"cognos to powerbi"}]
 };
 /*
 // Extract data for the Pie Chart
@@ -56,7 +56,7 @@ new Chart("myChart", {
 const chartConfigs = [
   { queryKey: "query4", type: "bar", labelField: "track", valueField: "no_of_models", title: "Query 4 - Bar Chart" },
   { queryKey: "query5", type: "bar", labelField: "track", valueField: "no_of_models", title: "Query 5 - Bar Chart" },
-  { queryKey: "query7", type: "pie", labelField: "issuedescription", valueField: "count", title: "Query 7 - Pie Chart" },
+  { queryKey: "query7", type: "pie", labelField: "track", valueField: "no_of_models", title: "Query 7 - Pie Chart" },
   { queryKey: "query8", type: "pie", labelField: "issuedescription", valueField: "count", title: "Query 8 - Pie Chart" },
   { queryKey: "query9", type: "pie", labelField: "issuedescription", valueField: "count", title: "Query 9 - Pie Chart" },
 ];
@@ -125,7 +125,8 @@ function renderCharts() {
           data: values,
           backgroundColor: [
             "#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#4bc0c0", "#9966ff", "#ff9f40", "#c9cbcf"
-          ]
+          ],
+          borderWidth: 0
         }]
       },
       options: {
