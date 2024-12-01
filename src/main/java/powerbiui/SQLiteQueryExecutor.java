@@ -12,18 +12,17 @@ public class SQLiteQueryExecutor {
     // Database URL will be provided as a runtime argument
     private static String DB_URL;
     private static String QUERIES_PROPERTIES = Constants.QUERIES_PROPERTIES_FILE;
-    private static String OUTPUT_DIR = Constants.OUTPUT_DIR;
 
     public static void main(String[] args) {
         // Check if the DB URL is provided
-//        if (args.length < 1) {
-//            System.err.println("Error: Please provide the database file path as an argument.");
-//            System.exit(1);
-//        }
+        if (args.length < 2) {
+            Logger.logAndExit("Error: Please provide the database file path as an argument.");
+            System.exit(1);
+        }
 
         // Assign DB URL from arguments
-//        DB_URL = Constants.DB_URL_PREFIX + args[0];
-        DB_URL = Constants.DB_URL_PREFIX + "C:\\Users\\2362858\\Downloads\\sqlite-tools-win-x64-3470000\\power-bi-ui.db";
+        DB_URL = Constants.DB_URL_PREFIX + args[0];
+        String jsonFilePath = args[1] + Constants.QUERY_RESULTS_JSON;
 
         try {
             // Load queries from properties file
@@ -32,6 +31,8 @@ public class SQLiteQueryExecutor {
             // Connect to SQLite database
             try (Connection connection = DriverManager.getConnection(DB_URL)) {
                 System.out.println("Connected to SQLite database successfully.");
+                
+                Map<String, List<Map<String, Object>>> queryResults = new LinkedHashMap<>();
 
                 // Execute each query and print results
                 for (String key : properties.stringPropertyNames()) {
@@ -39,14 +40,13 @@ public class SQLiteQueryExecutor {
                     System.out.println("\nExecuting query: " + key);
                     List<Map<String, Object>> results = executeQuery(connection, query);
 
-                    // Display the results
-//                    printResults(results);
-                    saveResultsToJson(key, results);
+                    queryResults.put(key, results);
                 }
+                saveResultsToJson(jsonFilePath, queryResults);
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+        	Logger.logAndExit("Couldn't able to connect to db: " + e.getMessage());
         }
     }
 
@@ -86,24 +86,12 @@ public class SQLiteQueryExecutor {
         return resultList;
     }
     
-    private static void saveResultsToJson(String key, List<Map<String, Object>> results) {
-        String filePath = OUTPUT_DIR + key + ".json";
+    private static void saveResultsToJson(String filePath, Map<String, List<Map<String, Object>>> results) {
         try (FileWriter writer = new FileWriter(filePath)) {
             new Gson().toJson(results, writer);
             System.out.println("Results saved to " + filePath);
         } catch (IOException e) {
-            System.err.println("Failed to save JSON for query key " + key + ": " + e.getMessage());
+            Logger.logAndExit("Failed to save JSON" + ": " + e.getMessage());
         }
     }
-
-//    private static void printResults(List<Map<String, Object>> results) {
-//        if (results.isEmpty()) {
-//            System.out.println("No results found.");
-//            return;
-//        }
-//
-//        for (Map<String, Object> row : results) {
-//            System.out.println(row);
-//        }
-//    }
 }
