@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="visualization.css">
-    <!-- <link rel="stylesheet" href="styles.css"> -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script> <!-- DataLabels plugin -->
 
@@ -15,124 +14,87 @@
             font-family: Arial, sans-serif;
             background-color: #f1f1f1;
         }
-        h4, p{
-        margin: 0;
-        }
-        /* Chart cards */
-        .card {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        padding: 16px;
-        text-align: center;
-        background-color: #ffffff;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 300px;
-        }
-        .card1, .card2 {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        /* padding: 16px; */
-        text-align: left;
-        background-color: #ffffff;
-        border-radius: 8px;
-        display: flex;
-        flex-direction: column;
-        align-items: left;
-        justify-content: left;
-        height: 80px;
-        margin-bottom: 20px;
-        font-weight: 700;
-        }
-        .card3{
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        padding: 16px;
-        text-align: center;
-        background-color: #ffffff;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 190px;
-            margin-bottom: 20px;
-        
-        }
-        .card6 {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        padding: 16px;
-        text-align: center;
-        background-color: #ffffff;
-        border-radius: 8px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 190px;
-        }
-        .card4, .card5 {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        padding: 16px;
-        text-align: center;
-        background-color: #ffffff;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 300px;
-        }
-        .card7, .card8, .card9 {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        padding: 16px;
-        text-align: center;
-        background-color: #ffffff;
-        border-radius: 8px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 400px;
-        }
 
         * {
-        box-sizing: border-box;
+            box-sizing: border-box;
         }
 
-        .dashboard{
-        display: grid;
-        grid-template-columns: repeat(1, 1fr);
-        padding: 0px 20px;	
+        /* General styling for cards */
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            padding: 16px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            margin-bottom: 20px;
         }
 
-        .heading-text{
-        background-color: #ffffff;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        /* Specific card styling */
+        .card1, .card2 {
+            height: 80px;
+        }
+        .card3{
+            height: 190px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-bottom:20px;
+        }
+        .card6 {
+            height: 190px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .card4, .card5 {
+            height: 300px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+		.card7, .card8, .card9 {
+            height: 400px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        /* Layout for the dashboard */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            padding: 0px 20px;	
+        }
+
+        .heading-text {
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
             margin: 0px;
             border: 1px solid #f1f1f1;
             border-radius: 4px;
             padding: 10px;
             text-align: center;
-        
         }
-        /* Float four columns side by side */
+
         .column {
-        float: left;
-        width: 33%;
-        padding: 10px 10px;
+            float: left;
+            width: 33%;
+            padding: 10px 10px;
         }
 
-        /* Remove extra left and right margins, due to padding */
-
+        /* Row layout */
         .row {
             margin: 0 -5px;
         }
 
-        /* Clear floats after the columns */
         .row:after {
-        content: "";
-        display: table;
-        clear: both;
+            content: "";
+            display: table;
+            clear: both;
         }
-</style>
+    </style>
     
 </head>
 <body>
@@ -147,34 +109,35 @@
     <!-- First Row -->
     <div class="row">
         <div class="column">
-            <div class="card1">
+            <div class="card card1">
                 <h4>Objects Converted</h4>
                 <p></p>
             </div>
-            <div class="card4">
+            <div class="card card4">
+                <h4>Chart Title for Chart 2</h4>
                 <canvas id="chart2"></canvas>
             </div>
         </div>
 
         <div class="column">
-            <div class="card2">
-                <h4>Objects not Converted</h4>
+            <div class="card card2">
+                <h4>Objects Not Converted</h4>
                 <p></p>
             </div>
-            <div class="card5">
+            <div class="card card5">
+                <h4>Chart Title for Chart 3</h4>
                 <canvas id="chart3"></canvas>
             </div>
         </div>
         
         <div class="column">
-            <div class="card3">
-                <p></p>
+            <div class="card card3">
                 <h4>Model Conversion</h4>
-                <canvas id="chart1"></canvas>
-            </div>
-            <div class="card6">
                 <p></p>
+            </div>
+            <div class="card card6">
                 <h4>Time for Model (Min)</h4>
+                <p></p>
             </div>
         </div>
     </div>
@@ -182,22 +145,22 @@
     <!-- Second Row -->
     <div class="row">
         <div class="column">
-            <div class="card7">
+            <div class="card card7">
                 <h4>No. of Models by Track</h4>
                 <canvas id="chart4"></canvas>
             </div>
         </div>
 
         <div class="column">
-            <div class="card8">
-                <h4>Model OBjects Handled</h4>
+            <div class="card card8">
+                <h4>Model Objects Handled</h4>
                 <canvas id="chart5"></canvas>
             </div>
         </div>
         
         <div class="column">
-            <div class="card9">
-                <h4>Model OBjects Un-Handled</h4>
+            <div class="card card9">
+                <h4>Model Objects Un-Handled</h4>
                 <canvas id="chart6"></canvas>
             </div>
         </div>
@@ -205,6 +168,5 @@
 </div>
 
 <script src="visualization.js"></script>
-<!-- <script src="index.js"></script> -->
 </body>
 </html>

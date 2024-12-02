@@ -108,13 +108,16 @@ function renderCharts() {
             data: values,
             backgroundColor: [
               "#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#4bc0c0", "#9966ff", "#ff9f40", "#c9cbcf"
-            ]
+            ],
+          borderWidth: 0
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: true,
           aspectRatio: 1.25,
+          rotation: config.type === 'doughnut' ? -90 * Math.PI / 180 : 0, // Start the doughnut chart from the top (-90 degrees)
+       	  circumference: config.type === 'doughnut' ? 180 * Math.PI / 180 : 360 * Math.PI / 180, // Draw half circle (180 degrees) for doughnut
           plugins: {
             legend: {
               display: false // Hide the default legend
