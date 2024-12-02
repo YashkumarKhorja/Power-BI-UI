@@ -1,4 +1,3 @@
-// Function to calculate query3 dynamically
 function calculateQuery3() {
   const q1 = data?.query1?.[0]?.count || 0;
   const q2 = data?.query2?.[0]?.count || 0;
@@ -12,7 +11,6 @@ function calculateQuery3() {
   return [{ label: "Model Conversion %", value: parseFloat(q3) }];
 }
 
-// Function to render text for specific boxes
 function renderTextCards() {
   const textMappings = {
       1: { label: "Objects Converted", value: data?.query1?.[0]?.count || "No data" },
@@ -40,7 +38,6 @@ function truncateText(text, maxlength){
 	}
 }
 
-// Function to render charts
 function renderCharts() {
   const chartMappings = {
       1: { type: "doughnut", queryKey: "query3", dynamicData: calculateQuery3 },
@@ -77,7 +74,6 @@ function renderCharts() {
 
       if (config.type === "bar") {
         queryData = queryData.sort((a, b) => {
-          // Sort by value (you can change to sort by label if needed)
           return b[Object.keys(b)[1]] - a[Object.keys(a)[1]];
         });
       }
@@ -87,32 +83,11 @@ function renderCharts() {
       const values = queryData.map(item => item.value || item[Object.keys(item)[1]]);
       console.log("values: ", values);
 
-      // new Chart(ctx, {
-      //     type: config.type,
-      //     data: {
-      //         labels: labels,
-      //         datasets: [{
-      //             data: values,
-      //             backgroundColor: [
-      //                 "#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#4bc0c0", "#9966ff", "#ff9f40", "#c9cbcf"
-      //             ]
-      //         }]
-      //     },
-      //     options: {
-      //         responsive: true,
-      //         plugins: {
-      //             legend: { display: config.type !== "bar" },
-      //             title: { display: true, text: `Box ${box}: ${config.queryKey.replace("query", "Query ")}` }
-      //         }
-      //     }
-      // });
-          // If it's a doughnut chart, add a data point for the remaining value
     if (config.type === 'doughnut') {
-      const total = 100; // Since we're dealing with percentage
+      const total = 100;
       const currentValue = values.reduce((acc, val) => acc + val, 0);
       const remainingValue = total - currentValue;
 
-      // Add the remaining value if there is a gap to fill
       if (remainingValue > 0) {
         labels.push("Remaining");
         values.push(remainingValue);
@@ -134,28 +109,22 @@ function renderCharts() {
           responsive: true,
           maintainAspectRatio: true,
           aspectRatio: config.type === 'pie' ? 1.30 : config.type === 'bar' ? 1.5 : config.type === 'doughnut' ? 1.15 : 1.5,
-          cutout: config.type === 'doughnut' ? '60%' : undefined, // Start the doughnut chart from the top (-90 degrees)
-          rotation: config.type === 'doughnut' ? -90  : undefined, // Start the doughnut chart from the top (-90 degrees)
-          circumference: config.type === 'doughnut' ? 180 : undefined, // Draw half circle (180 degrees) for doughnut
-
-  
+          cutout: config.type === 'doughnut' ? '60%' : undefined, 
+          rotation: config.type === 'doughnut' ? -90  : undefined, 
+          circumference: config.type === 'doughnut' ? 180 : undefined, 
           layout: config.type === 'pie' ? {
             padding: {
-              top: 30, // Adjust as needed for more space on the top
-              bottom: 30, // Adjust as needed for more space on the bottom
+              top: 30, 
+              bottom: 30, 
             } } : config.type === 'bar' ? {
               padding: {
-            top: 15, // Adjust as needed for more space on the top
+            top: 15, 
           }
         } : undefined,
           plugins: {
             legend: {
-              display: false // Hide the default legend
+              display: false 
             },
-            // title: {
-            //   display: true,
-            //   text: config.title
-            // },
             datalabels: {
               display: config.type !== 'doughnut',
               color: '#000',
@@ -209,7 +178,6 @@ function renderCharts() {
   });
 }
 
-// Execute after DOM content is loaded
 document.addEventListener("DOMContentLoaded", function () {
   renderTextCards();
   renderCharts();
