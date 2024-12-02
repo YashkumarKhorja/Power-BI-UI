@@ -22,10 +22,10 @@
         /* General styling for cards */
         .card {
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-            padding: 16px;
+            padding: 10px;
             background-color: #ffffff;
             border-radius: 8px;
-            margin-bottom: 20px;
+            margin: 10px;
         }
 
         /* Specific card styling */
@@ -36,16 +36,18 @@
             height: 190px;
             text-align: center;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             justify-content: center;
-            margin-bottom:20px;
+            padding: 20px;
         }
         .card6 {
             height: 190px;
             text-align: center;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             justify-content: center;
+            padding: 20px;
+
         }
         .card4, .card5 {
             height: 300px;
@@ -55,7 +57,7 @@
             justify-content: center;
         }
 		.card7, .card8, .card9 {
-            height: 400px;
+            height: 350px;
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -65,9 +67,8 @@
         .dashboard {
             display: grid;
             grid-template-columns: repeat(1, 1fr);
-            padding: 0px 20px;	
+            margin: 10px 20px;	
         }
-
         .heading-text {
             background-color: #ffffff;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -77,18 +78,48 @@
             padding: 10px;
             text-align: center;
         }
-
+        .title-pie{
+            padding: 10px;
+            margin: 0;
+        }
+        .heading{
+            margin-bottom: 20px;
+        }
         .column {
             float: left;
-            width: 33%;
-            padding: 10px 10px;
+            width: 32%;
+            /* padding: 10px 10px; */
         }
 
         /* Row layout */
         .row {
-            margin: 0 -5px;
+            margin: 0px 10px;
+            display: block;
+            width: 100%;
+        }
+        .data-text {
+            margin: 0px;
+            padding: 5px 0px;
+            text-align: left;
         }
 
+        .title {
+            padding: 5px 0px;
+            margin: 0px;
+
+        }
+        .title-model {
+            padding-top: 70px;
+            margin: 0px;
+            text-align: left;
+        }
+        .left{
+            flex: 1;
+            width: 50%;
+        }
+        .right-watch{
+            padding: 15px;
+        }
         .row:after {
             content: "";
             display: table;
@@ -110,34 +141,43 @@
     <div class="row">
         <div class="column">
             <div class="card card1">
-                <h4>Objects Converted</h4>
-                <p></p>
+                <h4 class="title">Objects Converted</h4>
+                <p class="data-text"></p>
             </div>
             <div class="card card4">
-                <h4>Chart Title for Chart 2</h4>
                 <canvas id="chart2"></canvas>
             </div>
         </div>
 
         <div class="column">
             <div class="card card2">
-                <h4>Objects Not Converted</h4>
-                <p></p>
+                <h4 class="title">Objects Not Converted</h4>
+                <p class="data-text"></p>
             </div>
             <div class="card card5">
-                <h4>Chart Title for Chart 3</h4>
                 <canvas id="chart3"></canvas>
             </div>
         </div>
         
         <div class="column">
             <div class="card card3">
-                <h4>Model Conversion</h4>
-                <p></p>
+                <div class="left">                
+                    <h4 class="title-model">Model Conversion</h4>
+                    <p class="data-text"></p>
+                </div>
+                <div class="right">                
+                    <canvas id="chart1"></canvas>
+                </div>
             </div>
             <div class="card card6">
-                <h4>Time for Model (Min)</h4>
-                <p></p>
+                <div class="left">                
+                <h4 class="title-model">Time for Model (Min)</h4>
+                <p class="data-text"></p>
+                </div>
+                <div class="right-watch">      
+                    <img src="stopwatch.png" width="150" height="150">          
+                    </div>
+
             </div>
         </div>
     </div>
@@ -146,21 +186,21 @@
     <div class="row">
         <div class="column">
             <div class="card card7">
-                <h4>No. of Models by Track</h4>
+                <h4 class="title-pie">No. of Models by Track</h4>
                 <canvas id="chart4"></canvas>
             </div>
         </div>
 
         <div class="column">
             <div class="card card8">
-                <h4>Model Objects Handled</h4>
+                <h4 class="title-pie">Model Objects Handled</h4>
                 <canvas id="chart5"></canvas>
             </div>
         </div>
         
         <div class="column">
             <div class="card card9">
-                <h4>Model Objects Un-Handled</h4>
+                <h4 class="title-pie">Model Objects Un-Handled</h4>
                 <canvas id="chart6"></canvas>
             </div>
         </div>

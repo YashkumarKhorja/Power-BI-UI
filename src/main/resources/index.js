@@ -99,7 +99,18 @@ function renderCharts() {
       //         }
       //     }
       // });
-      
+          // If it's a doughnut chart, add a data point for the remaining value
+    if (config.type === 'doughnut') {
+      const total = 100; // Since we're dealing with percentage
+      const currentValue = values.reduce((acc, val) => acc + val, 0);
+      const remainingValue = total - currentValue;
+
+      // Add the remaining value if there is a gap to fill
+      if (remainingValue > 0) {
+        labels.push("Remaining");
+        values.push(remainingValue);
+      }
+    }
       new Chart(ctx, {
         type: config.type,
         data: {
@@ -107,7 +118,7 @@ function renderCharts() {
           datasets: [{
             data: values,
             backgroundColor: [
-              "#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#4bc0c0", "#9966ff", "#ff9f40", "#c9cbcf"
+              "#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#4bc0c0", "#9966ff", "#ff9f40", "#c9cbcf", "#e0e0e0"
             ],
           borderWidth: 0
           }]
@@ -115,9 +126,18 @@ function renderCharts() {
         options: {
           responsive: true,
           maintainAspectRatio: true,
-          aspectRatio: 1.25,
-          rotation: config.type === 'doughnut' ? -90 * Math.PI / 180 : 0, // Start the doughnut chart from the top (-90 degrees)
-       	  circumference: config.type === 'doughnut' ? 180 * Math.PI / 180 : 360 * Math.PI / 180, // Draw half circle (180 degrees) for doughnut
+          aspectRatio: config.type === 'pie' ? 1.25 : 1.5,
+          cutout: config.type === 'doughnut' ? '60%' : undefined, // Start the doughnut chart from the top (-90 degrees)
+          rotation: config.type === 'doughnut' ? -90  : undefined, // Start the doughnut chart from the top (-90 degrees)
+          circumference: config.type === 'doughnut' ? 180 : undefined, // Draw half circle (180 degrees) for doughnut
+
+          layout: config.type === 'pie' ? {
+            padding: {
+              top: 40, // Adjust as needed for more space on the top
+              bottom: 40, // Adjust as needed for more space on the bottom
+              
+            }
+          } :  undefined,
           plugins: {
             legend: {
               display: false // Hide the default legend
@@ -127,12 +147,13 @@ function renderCharts() {
             //   text: config.title
             // },
             datalabels: {
+              display: config.type !== 'doughnut',
               color: '#000',
               formatter: (value, context) => {
                 console.log(context);
           const maxlength= 10;
-          const label = config.type === 'bar' ? context.dataset.data[context.dataIndex] : context.chart.data.labels[context.dataIndex];
-          const truncatedLabel = config.type === 'bar' ? label : truncateText(label, maxlength);
+          const label = config.type === ('bar' || 'doughnut') ? context.dataset.data[context.dataIndex] : context.chart.data.labels[context.dataIndex];
+          const truncatedLabel = config.type === ('bar' || 'doughnut') ? label : truncateText(label, maxlength);
                 return `${truncatedLabel}`;
               },
               font:{
@@ -144,9 +165,21 @@ function renderCharts() {
               borderColor: '#ccc',
               borderWidth: 0,
               borderRadius: 2,
-              padding: 4
+              padding: 10,
             }
           },
+          scales: config.type === 'bar' ? {
+            x: {
+              ticks: {
+                maxRotation: 180,
+                callback: function(value){
+                  const label = labels[value];
+                  const maxlength = 1;
+                  return truncateText(label, maxlength);
+                }
+              }
+            }
+          } :  undefined,
           tooltips: {
             callbacks: {
               label: function(tooltipItem, chartData) {
