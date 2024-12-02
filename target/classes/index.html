@@ -65,9 +65,10 @@
         }
         /* Layout for the dashboard */
         .dashboard {
-            display: grid;
-            grid-template-columns: repeat(1, 1fr);
-            margin: 10px 20px;	
+            display: flex;
+            flex-direction: column;
+            margin: 10px;	
+            justify-content: center;
         }
         .heading-text {
             background-color: #ffffff;
@@ -87,13 +88,13 @@
         }
         .column {
             float: left;
-            width: 32%;
+            width: 33%;
             /* padding: 10px 10px; */
         }
 
         /* Row layout */
         .row {
-            margin: 0px 10px;
+            margin: 0px;
             display: block;
             width: 100%;
         }
@@ -151,7 +152,7 @@
 
         <div class="column">
             <div class="card card2">
-                <h4 class="title">Objects Not Converted</h4>
+                <h4 class="title">Objects Not </h4>
                 <p class="data-text"></p>
             </div>
             <div class="card card5">

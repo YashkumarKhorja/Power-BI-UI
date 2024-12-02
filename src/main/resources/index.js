@@ -65,7 +65,7 @@ function renderCharts() {
 
       const ctx = canvasElement.getContext("2d");
 
-      const queryData = config.dynamicData
+      let queryData = config.dynamicData
           ? config.dynamicData()
           : data[config.queryKey];
       console.log("queryData: ", queryData);
@@ -73,6 +73,13 @@ function renderCharts() {
       if (!queryData || queryData.length === 0) {
           console.warn(`No data available for ${config.queryKey}.`);
           return;
+      }
+
+      if (config.type === "bar") {
+        queryData = queryData.sort((a, b) => {
+          // Sort by value (you can change to sort by label if needed)
+          return b[Object.keys(b)[1]] - a[Object.keys(a)[1]];
+        });
       }
 
       const labels = queryData.map(item => item.label || item[Object.keys(item)[0]]);
@@ -126,18 +133,21 @@ function renderCharts() {
         options: {
           responsive: true,
           maintainAspectRatio: true,
-          aspectRatio: config.type === 'pie' ? 1.25 : 1.5,
+          aspectRatio: config.type === 'pie' ? 1.30 : config.type === 'bar' ? 1.5 : config.type === 'doughnut' ? 1.15 : 1.5,
           cutout: config.type === 'doughnut' ? '60%' : undefined, // Start the doughnut chart from the top (-90 degrees)
           rotation: config.type === 'doughnut' ? -90  : undefined, // Start the doughnut chart from the top (-90 degrees)
           circumference: config.type === 'doughnut' ? 180 : undefined, // Draw half circle (180 degrees) for doughnut
 
+  
           layout: config.type === 'pie' ? {
             padding: {
-              top: 40, // Adjust as needed for more space on the top
-              bottom: 40, // Adjust as needed for more space on the bottom
-              
-            }
-          } :  undefined,
+              top: 30, // Adjust as needed for more space on the top
+              bottom: 30, // Adjust as needed for more space on the bottom
+            } } : config.type === 'bar' ? {
+              padding: {
+            top: 15, // Adjust as needed for more space on the top
+          }
+        } : undefined,
           plugins: {
             legend: {
               display: false // Hide the default legend
@@ -161,11 +171,11 @@ function renderCharts() {
         },
               anchor: 'end',
               align: 'end',
-              offset: 5,
+              offset: 2,
               borderColor: '#ccc',
               borderWidth: 0,
               borderRadius: 2,
-              padding: 10,
+              padding: 8,
             }
           },
           scales: config.type === 'bar' ? {
