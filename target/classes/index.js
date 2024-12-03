@@ -36,6 +36,7 @@ function truncateText(text, maxlength){
 	if(text.length > maxlength){
 		return text.substring(0, maxlength) + "...";
 	}
+  return text;
 }
 
 function renderCharts() {
@@ -49,12 +50,9 @@ function renderCharts() {
   };
 
   Object.entries(chartMappings).forEach(([box, config]) => {
-      console.log("chart: ", box, config);
       const canvasId = `chart${box}`;
-      console.log("canvas: ", canvasId);
       const canvasElement = document.getElementById(canvasId);
-      console.log("canvasElement: ", canvasElement);
-
+      
       if (!canvasElement) {
           console.error(`Canvas element with ID '${canvasId}' not found for box ${box}.`);
           return;
@@ -65,8 +63,7 @@ function renderCharts() {
       let queryData = config.dynamicData
           ? config.dynamicData()
           : data[config.queryKey];
-      console.log("queryData: ", queryData);
-
+      
       if (!queryData || queryData.length === 0) {
           console.warn(`No data available for ${config.queryKey}.`);
           return;
@@ -85,7 +82,7 @@ function renderCharts() {
           return item.label || item[Object.keys(item)[1]];
         }
       });
-      console.log("labels: ", labels);
+      
       const values = queryData.map(item => {
         if(!isNaN(item[Object.keys(item)[1]])){
           return item.value || item[Object.keys(item)[1]];
@@ -93,8 +90,7 @@ function renderCharts() {
           return item.value || item[Object.keys(item)[0]];
         }
       });
-      console.log("values: ", values);
-
+    
     if (config.type === 'doughnut') {
       const total = 100;
       const currentValue = values.reduce((acc, val) => acc + val, 0);
@@ -141,15 +137,14 @@ function renderCharts() {
               display: config.type !== 'doughnut',
               color: '#000',
               formatter: (value, context) => {
-                console.log(context);
-          const maxlength= 10;
-          const label = config.type === ('bar' || 'doughnut') ? context.dataset.data[context.dataIndex] : context.chart.data.labels[context.dataIndex];
-          const truncatedLabel = config.type === ('bar' || 'doughnut') ? label : truncateText(label, maxlength);
+                const maxlength= 10;
+                const label = config.type === ('bar' || 'doughnut') ? context.dataset.data[context.dataIndex] : context.chart.data.labels[context.dataIndex];
+                const truncatedLabel = config.type === ('bar' || 'doughnut') ? label : truncateText(label, maxlength);
                 return `${truncatedLabel}`;
               },
               font:{
-          size: 10
-        },
+                size: 10
+              },
               anchor: 'end',
               align: 'end',
               offset: 2,

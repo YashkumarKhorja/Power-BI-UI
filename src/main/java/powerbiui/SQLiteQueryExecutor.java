@@ -11,25 +11,25 @@ import com.google.gson.Gson;
 
 public class SQLiteQueryExecutor {
     private static String DB_URL;
-    private static String QUERIES_PROPERTIES;
+    private static String QUERIES_PROPERTIES_FILE;
 
     public static void main(String[] args) {
-        DB_URL = Constants.DB_URL_PREFIX + args[0];
-        QUERIES_PROPERTIES = args[1];
+    	DB_URL = Constants.DB_URL_PREFIX + args[0];
+        QUERIES_PROPERTIES_FILE = args[1];
         String jsonFilePath = args[2] + Constants.QUERY_RESULTS_JSON;
 
         try {
             // Load queries from properties file
-            Properties properties = loadQueries(QUERIES_PROPERTIES);
-
+            Properties properties = loadQueries();
+            
             // Connect to SQLite database
             try (Connection connection = DriverManager.getConnection(DB_URL)) {
                 Map<String, List<Map<String, Object>>> queryResults = new LinkedHashMap<>();
 
                 for (String key : properties.stringPropertyNames()) {
-                    String query = properties.getProperty(key);
+                	String query = properties.getProperty(key);
                     List<Map<String, Object>> results = executeQuery(connection, query);
-
+                    
                     queryResults.put(key, results);
                 }
                 saveResultsToJson(jsonFilePath, queryResults);
@@ -46,9 +46,9 @@ public class SQLiteQueryExecutor {
      * @return Properties object containing the queries.
      * @throws IOException If the file cannot be read.
      */
-    private static Properties loadQueries(String QUERIES_PROPERTIES) throws IOException {
+    private static Properties loadQueries() throws IOException {
         Properties properties = new Properties();
-        try (InputStream inputStream = new FileInputStream(QUERIES_PROPERTIES)) {
+        try (InputStream inputStream = new FileInputStream(QUERIES_PROPERTIES_FILE)) {
             properties.load(inputStream);
         }
         return properties;
@@ -58,14 +58,14 @@ public class SQLiteQueryExecutor {
         List<Map<String, Object>> resultList = new ArrayList<>();
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
-
+        	
             ResultSetMetaData metaData = resultSet.getMetaData();
             int columnCount = metaData.getColumnCount();
-
+            
             while (resultSet.next()) {
                 Map<String, Object> row = new HashMap<>();
                 for (int i = 1; i <= columnCount; i++) {
-                    row.put(metaData.getColumnLabel(i), resultSet.getObject(i));
+                	row.put(metaData.getColumnLabel(i), resultSet.getObject(i));
                 }
                 resultList.add(row);
             }

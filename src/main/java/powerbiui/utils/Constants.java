@@ -2,7 +2,6 @@ package powerbiui.utils;
 
 public class Constants {
 	public static final String DB_URL_PREFIX = "jdbc:sqlite:";
-	public static final String QUERIES_PROPERTIES_FILE = "queries.properties";
 	
 	public static final String OUTPUT_VISUALIZATION_HTML_FILE = "\\visualization.html";
 	public static final String OUTPUT_VISUALIZATION_JS_FILE = "\\visualization.js";
