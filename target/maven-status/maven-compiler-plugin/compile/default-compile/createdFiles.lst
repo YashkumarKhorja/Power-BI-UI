@@ -1,3 +1,5 @@
 powerbiui\App.class
-powerbiui\SQLiteQueryExecutor.class
+powerbiui\process\GenerateOutputFiles.class
 powerbiui\utils\Constants.class
+powerbiui\utils\Logger.class
+powerbiui\SQLiteQueryExecutor.class
