@@ -31,10 +31,8 @@ public class GenerateOutputFiles {
             JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
             reader.close();
 
-            // Create the visualization file with the JSON data
             createVisualizationFile(jsonObject);
 
-            // Copy the index.html to visualization.html
             copyTemplateFile(INDEX_HTML_TEMPLATE, HTML_OUTPUT_PATH);
         } catch (IOException e) {
             Logger.logAndExit("An error occurred during the JS data update process: " + e.getMessage());
@@ -50,11 +48,9 @@ public class GenerateOutputFiles {
 
             String templateContent = readFromInputStream(jsTemplateStream);
 
-            // Replace the placeholder in the JS file with the new JSON data
             String newData = "const data = " + jsonObject.toString() + ";\n";
             String updatedContent = newData + templateContent;
 
-            // Write the updated content to the output JS file
             try (FileWriter fileWriter = new FileWriter(JS_OUTPUT_PATH, false)) {
                 fileWriter.write(updatedContent);
             }
@@ -73,7 +69,6 @@ public class GenerateOutputFiles {
 
             String templateContent = readFromInputStream(templateStream);
 
-            // Write the content to visualization.html
             try (FileWriter htmlFileWriter = new FileWriter(outputFilePath, false)) {
                 htmlFileWriter.write(templateContent);
             }

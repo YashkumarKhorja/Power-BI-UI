@@ -1,5 +1,6 @@
 package powerbiui;
 
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,35 +10,24 @@ import powerbiui.utils.*;
 import com.google.gson.Gson;
 
 public class SQLiteQueryExecutor {
-    // Database URL will be provided as a runtime argument
     private static String DB_URL;
-    private static String QUERIES_PROPERTIES = Constants.QUERIES_PROPERTIES_FILE;
+    private static String QUERIES_PROPERTIES;
 
     public static void main(String[] args) {
-        // Check if the DB URL is provided
-        if (args.length < 2) {
-            Logger.logAndExit("Error: Please provide the database file path as an argument.");
-            System.exit(1);
-        }
-
-        // Assign DB URL from arguments
         DB_URL = Constants.DB_URL_PREFIX + args[0];
-        String jsonFilePath = args[1] + Constants.QUERY_RESULTS_JSON;
+        QUERIES_PROPERTIES = args[1];
+        String jsonFilePath = args[2] + Constants.QUERY_RESULTS_JSON;
 
         try {
             // Load queries from properties file
-            Properties properties = loadQueries();
+            Properties properties = loadQueries(QUERIES_PROPERTIES);
 
             // Connect to SQLite database
             try (Connection connection = DriverManager.getConnection(DB_URL)) {
-                System.out.println("Connected to SQLite database successfully.");
-                
                 Map<String, List<Map<String, Object>>> queryResults = new LinkedHashMap<>();
 
-                // Execute each query and print results
                 for (String key : properties.stringPropertyNames()) {
                     String query = properties.getProperty(key);
-                    System.out.println("\nExecuting query: " + key);
                     List<Map<String, Object>> results = executeQuery(connection, query);
 
                     queryResults.put(key, results);
@@ -56,12 +46,9 @@ public class SQLiteQueryExecutor {
      * @return Properties object containing the queries.
      * @throws IOException If the file cannot be read.
      */
-    private static Properties loadQueries() throws IOException {
+    private static Properties loadQueries(String QUERIES_PROPERTIES) throws IOException {
         Properties properties = new Properties();
-        try (InputStream inputStream = SQLiteQueryExecutor.class.getClassLoader().getResourceAsStream(QUERIES_PROPERTIES)) {
-            if (inputStream == null) {
-                throw new IOException("queries.properties file not found in resources folder.");
-            }
+        try (InputStream inputStream = new FileInputStream(QUERIES_PROPERTIES)) {
             properties.load(inputStream);
         }
         return properties;
@@ -89,7 +76,6 @@ public class SQLiteQueryExecutor {
     private static void saveResultsToJson(String filePath, Map<String, List<Map<String, Object>>> results) {
         try (FileWriter writer = new FileWriter(filePath)) {
             new Gson().toJson(results, writer);
-            System.out.println("Results saved to " + filePath);
         } catch (IOException e) {
             Logger.logAndExit("Failed to save JSON" + ": " + e.getMessage());
         }

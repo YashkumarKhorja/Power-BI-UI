@@ -78,9 +78,21 @@ function renderCharts() {
         });
       }
 
-      const labels = queryData.map(item => item.label || item[Object.keys(item)[0]]);
+      const labels = queryData.map(item => {
+        if(isNaN(item[Object.keys(item)[0]])){
+          return item.label || item[Object.keys(item)[0]];
+        } else {
+          return item.label || item[Object.keys(item)[1]];
+        }
+      });
       console.log("labels: ", labels);
-      const values = queryData.map(item => item.value || item[Object.keys(item)[1]]);
+      const values = queryData.map(item => {
+        if(!isNaN(item[Object.keys(item)[1]])){
+          return item.value || item[Object.keys(item)[1]];
+        } else{
+          return item.value || item[Object.keys(item)[0]];
+        }
+      });
       console.log("values: ", values);
 
     if (config.type === 'doughnut') {
